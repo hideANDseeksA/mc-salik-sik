@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 
-const clientId = "303466688534-lk23to2rslkmgfngp1mesvbvr66e0q8e.apps.googleusercontent.com"; // Your Google client ID
+const clientId = "303466688534-fon7ihih5hpsq3349jgh7ft700ptsc3a.apps.googleusercontent.com"; // Your Google client ID
 
 function App() {
   return (
