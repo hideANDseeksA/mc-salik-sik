@@ -136,14 +136,4 @@
   color: #fff;
 }
 
-.google-button {
-  margin-top: 15px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center; /* Center vertically */
-}
 
-.google-button button:hover {
-  background-color: #357ae8; /* Darker blue on hover */
-}
