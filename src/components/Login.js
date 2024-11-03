@@ -127,10 +127,11 @@ const LoginForm = () => {
             />
             <label>Enter your password</label>
           </div>
-          <div id="sigInButton">
+          <div id="sigInButton" style={{ width: '100%' }}>
             <GoogleLogin
               onSuccess={onSuccess}
               onError={onFailure}
+              style={{ width: '100%' }} // Ensure full width
             />
           </div>
           <div className="forget">
