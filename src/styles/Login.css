@@ -144,14 +144,6 @@
   align-items: center; /* Center vertically */
 }
 
-
-.google-button button {
-  width: 80% !important;
-  max-width: 300px;
-  margin: 0 auto; /* Center in the container */
-}
-
-
 .google-button button:hover {
   background-color: #357ae8; /* Darker blue on hover */
 }
