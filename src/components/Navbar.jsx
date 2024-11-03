@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'; // Import SweetAlert2
 import '../styles/App.css';
 import '../styles/Dashboard.css';
+import logo from '../logo.png'; // Import the logo image
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -19,9 +20,7 @@ const Navbar = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 localStorage.removeItem('token');
-                console.log('User logged out');
                 navigate('/login');
-                console.log('Navigating to login...');
                 Swal.fire(
                     'Logged Out!',
                     'You have been successfully logged out.',
@@ -34,7 +33,10 @@ const Navbar = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-custom">
             <div className="container-fluid">
-                <Link className="navbar-brand" to="/dashboard">MC Saliksik</Link>
+                <Link className="navbar-brand d-flex align-items-center" to="/dashboard">
+                    <img src={logo} alt="Logo" className="navbar-logo me-2" /> {/* Logo on the left */}
+                    MC Saliksik
+                </Link>
                 <button 
                     className="navbar-toggler" 
                     type="button" 
@@ -49,7 +51,6 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
-                            {/* Logout Button */}
                             <button className="btn btn-outline-danger" onClick={handleLogout}>
                                 Logout
                             </button>

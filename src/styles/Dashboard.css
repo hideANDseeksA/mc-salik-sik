@@ -106,7 +106,7 @@ h4 {
 
 /* Sticky navbar styling */
 .navbar {
-    background-color: #2504ffb4 !important; /* Darker violet for better contrast */
+    color: #ffffff !important;
     position: fixed !important;
     top: 0;
     left: 0;
@@ -128,7 +128,14 @@ h4 {
 }
 
 .nav-link:hover {
-    background-color: #360062; /* Darker shade for hover effect */
+    color: #ffffff !important;
+}
+.logo {
+    width: 70px;
+    height: 70px;
+}
+.dashboard {
+    margin-top: 50px; /* Adjust the value as needed */
 }
 
 /* Responsive adjustments */

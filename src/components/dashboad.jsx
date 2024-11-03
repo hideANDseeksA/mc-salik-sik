@@ -3,6 +3,8 @@ import Navbar from './Navbar';
 import Swal from 'sweetalert2';
 import '../styles/Dashboard.css';
 import '../styles/App.css';
+import logoLeft from '../MC_Grad_School_Logo2023.gif';
+import logoRight from '../download-_1_.png';
 
 export default function Dashboard() {
     const [books, setBooks] = useState([]);
@@ -15,7 +17,6 @@ export default function Dashboard() {
 
     useEffect(() => {
         const fetchBooks = async () => {
-            // Display loading alert
             Swal.fire({
                 title: 'Loading Thesis...',
                 text: 'Please wait while we fetch the data.',
@@ -33,7 +34,6 @@ export default function Dashboard() {
                 const data = await response.json();
                 setBooks(data);
 
-                // Extract unique years from data and sort them
                 const uniqueYears = [...new Set(data.map(book => book.year.trim()))]
                     .filter(year => year)
                     .sort((a, b) => b - a);
@@ -42,7 +42,7 @@ export default function Dashboard() {
                 setError('Failed to fetch thesis. Please try again later.');
             } finally {
                 setLoading(false);
-                Swal.close(); // Close the loading alert
+                Swal.close();
             }
         };
 
@@ -86,7 +86,7 @@ export default function Dashboard() {
 
     const handleClick = (url) => {
         if (url) {
-            console.log("Opening URL:", url); // Check if URL is correct
+            console.log("Opening URL:", url);
             window.open(url, '_blank');
         } else {
             Swal.fire('No PDF Available', 'This thesis does not have an available PDF link.', 'info');
@@ -109,8 +109,13 @@ export default function Dashboard() {
     return (
         <div className="dashboard">
             <Navbar />
-            <div className="container mt-5">
-                <h2 className="text-center mb-4">Thesis Abstract</h2>
+            <div className="container mt-3">
+                <div className="d-flex justify-content-between align-items-center mb-4">
+                    <img src={logoLeft} alt="Logo Left" className="logo" />
+                    <h2 className="text-center">Thesis Abstract</h2>
+                    <img src={logoRight} alt="Logo Right" className="logo" />
+                </div>
+                
                 <div className="row mb-4">
                     <div className="col-md-6">
                         <input
@@ -136,6 +141,7 @@ export default function Dashboard() {
                         </select>
                     </div>
                 </div>
+
                 {loading ? (
                     <p className="text-center" aria-live="polite">Loading thesis...</p>
                 ) : error ? (

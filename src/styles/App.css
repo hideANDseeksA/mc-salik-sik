@@ -213,3 +213,7 @@ body {
   }
 }
 
+.navbar-logo {
+  height: 70px; /* Adjust logo size */
+  width: auto;
+}
