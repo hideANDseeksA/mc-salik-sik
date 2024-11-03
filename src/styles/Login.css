@@ -136,4 +136,19 @@
   color: #fff;
 }
 
+#sigInButton button {
+  width: 100% !important;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.button-container button {
+  width: 100%;
+}
 
