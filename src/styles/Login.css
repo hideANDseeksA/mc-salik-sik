@@ -137,24 +137,20 @@
 }
 
 .google-button {
-  margin-top: 15px; /* Space between the login button and Google button */
-  width: 100%; /* Make the button take the full width of the parent */
+  margin-top: 15px;
+  width: 100%;
   display: flex;
-  justify-content: center; /* Center the button horizontally within the parent */
+  justify-content: center;
+  align-items: center; /* Center vertically */
 }
 
+
 .google-button button {
-  background-color: #4285f4; /* Google blue */
-  color: white; /* White text */
-  padding: 12px 20px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 1em; /* Scale font size based on parent */
-  width: 80%; /* 80% of the parent width */
-  max-width: 300px; /* Limit max width */
-  transition: background-color 0.3s ease;
+  width: 80% !important;
+  max-width: 300px;
+  margin: 0 auto; /* Center in the container */
 }
+
 
 .google-button button:hover {
   background-color: #357ae8; /* Darker blue on hover */
