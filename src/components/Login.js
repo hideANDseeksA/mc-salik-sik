@@ -127,13 +127,24 @@ const LoginForm = () => {
             />
             <label>Enter your password</label>
           </div>
-          <div id="sigInButton">
-            <GoogleLogin
-              onSuccess={onSuccess}
-              onError={onFailure}
-              style={{ width: '100%' }}
+          <div className="custom-google-button">
+      <GoogleLogin
+        onSuccess={onSuccess}
+        onError={onFailure}
+        render={(renderProps) => (
+          <button
+            onClick={renderProps.onClick}
+            disabled={renderProps.disabled} >
+            <img
+              src="https://developers.google.com/identity/images/g-logo.png"
+              alt="Google logo"
+              style={{ width: '20px', marginRight: '10px' }}
             />
-          </div>
+            Sign in with Google
+          </button>
+        )}
+      />
+    </div>
           <div className="forget">
             {/* You can add a "Forget password?" link here */}
           </div>

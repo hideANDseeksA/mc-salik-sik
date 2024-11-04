@@ -92,7 +92,6 @@ export default function Dashboard() {
             Swal.fire('No PDF Available', 'This thesis does not have an available PDF link.', 'info');
         }
     };
-
     return (
         <div className="dashboard">
             <Navbar />
