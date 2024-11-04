@@ -24,6 +24,7 @@
   background: url('bg.jpg'), #000;
   background-position: center;
   background-size: cover;
+  filter: brightness(0.6);
 }
 
 .login-page .wrapper {
@@ -111,7 +112,9 @@
   text-decoration: underline;
 }
 
+
 .login-page button {
+  margin-top: 20px;
   background: #fff;
   color: #000;
   font-weight: 600;
@@ -172,6 +175,11 @@
   border-color: #fff;
   background: rgba(255, 255, 255, 0.15);
 }
+.or-text {
+  margin-top: 20px; /* Adjust the margin as needed */
+  color: white;
+}
+
 
 
 

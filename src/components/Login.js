@@ -127,6 +127,13 @@ const LoginForm = () => {
             />
             <label>Enter your password</label>
           </div>
+
+          <button type="submit" disabled={loading}>
+            {loading ? 'Signing in...' : 'Log In'}
+          </button>
+
+          <p class="or-text">OR</p>
+          
           <div id="sigInButton">
             <GoogleLogin
               onSuccess={onSuccess}
@@ -134,12 +141,6 @@ const LoginForm = () => {
               style={{ width: '100%' }}
             />
           </div>
-          <div className="forget">
-            {/* You can add a "Forget password?" link here */}
-          </div>
-          <button type="submit" disabled={loading}>
-            {loading ? 'Signing in...' : 'Log In'}
-          </button>
           {loading && <p className="loading-text">Please wait...</p>}
         </form>
       </div>
