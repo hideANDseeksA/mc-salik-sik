@@ -145,3 +145,25 @@ h4 {
         max-width: 100%;
     }
 }
+.dashboard {
+    font-family: 'Arial', sans-serif; /* Use a professional font */
+}
+
+.accordion-button {
+    font-weight: bold;
+    background-color: #f8f9fa; /* Light background for the accordion button */
+    color: #333; /* Dark text color */
+}
+
+.accordion-button:hover {
+    background-color: #e2e6ea; /* Slightly darker on hover */
+}
+
+.accordion-body {
+    background-color: #ffffff; /* White background for the body */
+}
+
+.accordion-item {
+    margin-bottom: 10px; /* Space between accordion items */
+    border-radius: 0.25rem; /* Rounded corners */
+}

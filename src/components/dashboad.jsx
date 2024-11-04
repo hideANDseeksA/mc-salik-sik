@@ -93,29 +93,16 @@ export default function Dashboard() {
         }
     };
 
-    const groupBooksByYear = () => {
-        return filteredBooks.reduce((acc, book) => {
-            const year = book.year;
-            if (!acc[year]) {
-                acc[year] = [];
-            }
-            acc[year].push(book);
-            return acc;
-        }, {});
-    };
-
-    const groupedBooks = groupBooksByYear();
-
     return (
         <div className="dashboard">
             <Navbar />
-            <div className="container mt-3">
+            <div className="container mt-4">
                 <div className="d-flex justify-content-between align-items-center mb-4">
                     <img src={logoLeft} alt="Logo Left" className="logo" />
                     <h2 className="text-center">Thesis Abstract</h2>
                     <img src={logoRight} alt="Logo Right" className="logo" />
                 </div>
-                
+
                 <div className="row mb-4">
                     <div className="col-md-6">
                         <input
@@ -147,29 +134,40 @@ export default function Dashboard() {
                 ) : error ? (
                     <p className="text-center text-danger" aria-live="polite">{error}</p>
                 ) : (
-                    <div className="row">
-                        {Object.keys(groupedBooks).length === 0 ? (
+                    <div className="accordion" id="thesisAccordion">
+                        {filteredBooks.length === 0 ? (
                             <p className="text-center">No thesis found.</p>
                         ) : (
-                            Object.keys(groupedBooks).sort((a, b) => b - a).map(year => (
-                                <div key={year} className="mb-4">
-                                    <h4 className="text-center">{year}</h4>
-                                    <div className="row">
-                                        {groupedBooks[year].map(book => (
-                                            <div className="col-md-4 mb-3" key={book.id}>
-                                                <div 
-                                                    className="card h-100"
-                                                    onClick={() => handleClick(book.abstract_url)}
-                                                    style={{ cursor: book.abstract_url ? 'pointer' : 'default' }}
-                                                >
-                                                    <div className="card-body">
-                                                        <h5 className="card-title">{book.title}</h5>
-                                                        <p className="card-text"><strong>Year:</strong> {book.year}</p>
-                                                        <p className="card-text"><strong>Keywords:</strong> {book.keyword}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
+                            filteredBooks.map((book, index) => (
+                                <div className="accordion-item border" key={book.id}>
+                                    <h2 className="accordion-header" id={`heading${index}`}>
+                                        <button 
+                                            className="accordion-button" 
+                                            type="button" 
+                                            data-bs-toggle="collapse" 
+                                            data-bs-target={`#collapse${index}`} 
+                                            aria-expanded="true" 
+                                            aria-controls={`collapse${index}`}
+                                        >
+                                            {book.title}
+                                        </button>
+                                    </h2>
+                                    <div 
+                                        id={`collapse${index}`} 
+                                        className="accordion-collapse collapse" 
+                                        aria-labelledby={`heading${index}`} 
+                                        data-bs-parent="#thesisAccordion"
+                                    >
+                                        <div className="accordion-body">
+                                            <p><strong>Year:</strong> {book.year}</p>
+                                            <p><strong>Keywords:</strong> {book.keyword}</p>
+                                            <button 
+                                                className="btn btn-primary" 
+                                                onClick={() => handleClick(book.abstract_url)}
+                                            >
+                                                View Abstract
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             ))
