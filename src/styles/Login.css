@@ -136,8 +136,7 @@
   color: #fff;
 }
 
-
-.custom-google-button button {
+#sigInButton {
   background: #fff;
   color: #000;
   font-weight: 600;
@@ -145,9 +144,27 @@
   padding: 12px 20px;
   cursor: pointer;
   border-radius: 3px;
-  font-size: 16px;
   border: 2px solid transparent;
   transition: 0.3s ease;
+}
+
+#sigInButton:hover {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+}
+.custom-google-button button {
+  background-color: #4285f4;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
 }
 
 .custom-google-button button:hover {
