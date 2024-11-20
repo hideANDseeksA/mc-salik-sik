@@ -113,7 +113,7 @@ export default function Dashboard() {
                     <div className="col-md-6 col-12">
                         <input
                             type="text"
-                            placeholder="Search for a Thesis, author, or Major..."
+                            placeholder="Search title,keywords..."
                             value={search}
                             onChange={handleSearchChange}
                             className="form-control"
