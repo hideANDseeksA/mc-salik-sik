@@ -21,6 +21,26 @@ const ViewPDF = () => {
             document.body.style.userSelect = 'none'; // Disable text selection
         };
 
+
+    useEffect(() => {
+    let lastTime = Date.now();
+
+    const detectRecording = () => {
+        const now = Date.now();
+        if (now - lastTime < 500) {
+            alert('Screen recording or screenshots are disabled for this content.');
+        }
+        lastTime = now;
+    };
+
+    document.addEventListener('visibilitychange', detectRecording);
+
+    return () => {
+        document.removeEventListener('visibilitychange', detectRecording);
+    };
+}, []);
+
+
         const blockKeys = (e) => {
             if (
                 e.key === 'PrintScreen' || 
