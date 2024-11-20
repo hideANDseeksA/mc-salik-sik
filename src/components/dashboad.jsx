@@ -5,6 +5,8 @@ import '../styles/Dashboard.css';
 import '../styles/App.css';
 import logoLeft from '../MC_Grad_School_Logo2023.gif';
 import logoRight from '../download-_1_.png';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Dashboard() {
     const [books, setBooks] = useState([]);
@@ -14,6 +16,18 @@ export default function Dashboard() {
     const [error, setError] = useState(null);
     const [years, setYears] = useState([]);
     const [debouncedSearch, setDebouncedSearch] = useState(search);
+ 
+
+    const navigate = useNavigate();
+
+    const handleClick = (url) => {
+        if (url) {
+            navigate('/view-pdf', { state: { pdfUrl: url } });
+        } else {
+            Swal.fire('No PDF Available', 'This thesis does not have an available PDF link.', 'info');
+        }
+    };
+
 
     useEffect(() => {
         const fetchBooks = async () => {
@@ -76,7 +90,7 @@ export default function Dashboard() {
     const filterBooks = () => {
         return books.filter(book => {
             const matchesSearch = book.title.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-                                  book.keyword.toLowerCase().includes(debouncedSearch.toLowerCase());
+                book.keyword.toLowerCase().includes(debouncedSearch.toLowerCase());
             const matchesYear = selectedYear ? book.year === selectedYear : true;
             return matchesSearch && matchesYear;
         });
@@ -84,14 +98,7 @@ export default function Dashboard() {
 
     const filteredBooks = filterBooks();
 
-    const handleClick = (url) => {
-        if (url) {
-            console.log("Opening URL:", url);
-            window.open(url, '_blank');
-        } else {
-            Swal.fire('No PDF Available', 'This thesis does not have an available PDF link.', 'info');
-        }
-    };
+
     return (
         <div className="dashboard">
             <Navbar />
@@ -103,7 +110,7 @@ export default function Dashboard() {
                 </div>
 
                 <div className="row mb-4">
-                    <div className="col-md-6">
+                    <div className="col-md-6 col-12">
                         <input
                             type="text"
                             placeholder="Search for a Thesis, author, or Major..."
@@ -113,10 +120,10 @@ export default function Dashboard() {
                             aria-label="Search for a thesis, author, or type"
                         />
                     </div>
-                    <div className="col-md-6">
-                        <select 
-                            value={selectedYear} 
-                            onChange={handleYearChange} 
+                    <div className="col-md-6 col-12 mt-2 mt-md-0">
+                        <select
+                            value={selectedYear}
+                            onChange={handleYearChange}
                             className="form-control"
                             aria-label="Filter by year"
                         >
@@ -140,32 +147,33 @@ export default function Dashboard() {
                             filteredBooks.map((book, index) => (
                                 <div className="accordion-item border" key={book.id}>
                                     <h2 className="accordion-header" id={`heading${index}`}>
-                                        <button 
-                                            className="accordion-button" 
-                                            type="button" 
-                                            data-bs-toggle="collapse" 
-                                            data-bs-target={`#collapse${index}`} 
-                                            aria-expanded="true" 
+                                        <button
+                                            className="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target={`#collapse${index}`}
+                                            aria-expanded="true"
                                             aria-controls={`collapse${index}`}
                                         >
                                             {book.title}
                                         </button>
                                     </h2>
-                                    <div 
-                                        id={`collapse${index}`} 
-                                        className="accordion-collapse collapse" 
-                                        aria-labelledby={`heading${index}`} 
+                                    <div
+                                        id={`collapse${index}`}
+                                        className="accordion-collapse collapse"
+                                        aria-labelledby={`heading${index}`}
                                         data-bs-parent="#thesisAccordion"
                                     >
                                         <div className="accordion-body">
                                             <p><strong>Year:</strong> {book.year}</p>
                                             <p><strong>Keywords:</strong> {book.keyword}</p>
-                                            <button 
-                                                className="btn btn-primary" 
+                                            <button
+                                                className="btn btn-primary"
                                                 onClick={() => handleClick(book.abstract_url)}
                                             >
                                                 View Abstract
                                             </button>
+
                                         </div>
                                     </div>
                                 </div>
@@ -174,6 +182,8 @@ export default function Dashboard() {
                     </div>
                 )}
             </div>
+
+          
         </div>
     );
 }
