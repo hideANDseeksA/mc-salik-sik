@@ -11,7 +11,25 @@ const ViewPDF = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
-
+ 
+    useEffect(() => {
+        let lastTime = Date.now();
+    
+        const detectRecording = () => {
+            const now = Date.now();
+            if (now - lastTime < 500) {
+                alert('Screen recording or screenshots are disabled for this content.');
+            }
+            lastTime = now;
+        };
+    
+        document.addEventListener('visibilitychange', detectRecording);
+    
+        return () => {
+            document.removeEventListener('visibilitychange', detectRecording);
+        };
+    }, []);
+    
     
         // Prevent screenshot using keydown and context menu
         const preventScreenshot = () => {
@@ -28,7 +46,12 @@ const ViewPDF = () => {
                 (e.metaKey && e.key === 'p')
             ) {
                 e.preventDefault();
-                alert('Screenshots are disabled for this content.');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Screenshots Disabled',
+                    text: 'Screenshots are disabled for this content.',
+                });
+            
             }
         };
 
@@ -50,7 +73,7 @@ const ViewPDF = () => {
 
         preventScreenshot();
         preventMobileScreenshot();
-        
+
     useEffect(() => {
         if (!pdfUrl) return;
 
@@ -65,11 +88,14 @@ const ViewPDF = () => {
             },
         });
 
+        let reloadTimeout;
+
         const iframe = document.querySelector('iframe');
         if (iframe) {
             iframe.onload = () => {
                 setLoading(false);
                 Swal.close();
+                clearTimeout(reloadTimeout); // Clear reload timer on successful load
             };
 
             iframe.onerror = () => {
@@ -77,7 +103,25 @@ const ViewPDF = () => {
                 Swal.close();
                 setError(true);
             };
+
+            // Set a timeout to reload after 5 seconds if iframe doesn't load
+            reloadTimeout = setTimeout(() => {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'PDF Not Loaded',
+                    text: 'The PDF is taking too long to load. Do you want to reload?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Reload',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.reload(); // Reload the page
+                    }
+                });
+            }, 10000);
         }
+
+        // Cleanup timeout on component unmount
+        return () => clearTimeout(reloadTimeout);
     }, [pdfUrl]);
 
     if (!pdfUrl) {
@@ -103,7 +147,15 @@ const ViewPDF = () => {
     }
 
     return (
-        <div style={{ height: '100vh', width: '100%', position: 'relative' }}>
+        <div
+            style={{
+                height: '100vh',
+                width: '100vw',
+                margin: 0,
+                padding: 0,
+                overflow: 'hidden', 
+            }}
+        >
             {loading && <div className="loading-overlay"></div>}
             <iframe
                 src={`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(pdfUrl)}`}
@@ -111,7 +163,7 @@ const ViewPDF = () => {
                     width: '100%',
                     height: '100%',
                     border: 'none',
-                    userSelect: 'none',
+                    overflow: 'hidden', // Prevent iframe scrollbars
                 }}
                 title="PDF Viewer"
                 sandbox="allow-scripts allow-same-origin"

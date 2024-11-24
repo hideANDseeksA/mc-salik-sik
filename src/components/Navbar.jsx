@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'; // Import SweetAlert2
 import '../styles/App.css';
 import '../styles/Dashboard.css';
-import logo from '../logo.png'; // Import the logo image
+import logo from '../search.png'; // Import the logo image
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -35,7 +35,7 @@ const Navbar = () => {
             <div className="container-fluid">
                 <Link className="navbar-brand d-flex align-items-center" to="/dashboard">
                     <img src={logo} alt="Logo" className="navbar-logo me-2" /> {/* Logo on the left */}
-                    MC Saliksik
+                    Research & Thesis Repository
                 </Link>
                 <button 
                     className="navbar-toggler" 

@@ -7,7 +7,6 @@ import logoLeft from '../MC_Grad_School_Logo2023.gif';
 import logoRight from '../download-_1_.png';
 import { useNavigate } from 'react-router-dom';
 
-
 export default function Dashboard() {
     const [books, setBooks] = useState([]);
     const [search, setSearch] = useState('');
@@ -16,7 +15,7 @@ export default function Dashboard() {
     const [error, setError] = useState(null);
     const [years, setYears] = useState([]);
     const [debouncedSearch, setDebouncedSearch] = useState(search);
- 
+    const [selectedLetter, setSelectedLetter] = useState(''); 
 
     const navigate = useNavigate();
 
@@ -27,7 +26,6 @@ export default function Dashboard() {
             Swal.fire('No PDF Available', 'This thesis does not have an available PDF link.', 'info');
         }
     };
-
 
     useEffect(() => {
         const fetchBooks = async () => {
@@ -41,7 +39,7 @@ export default function Dashboard() {
             });
 
             try {
-                const response = await fetch('https://backend-j2o4.onrender.com/api/research');
+                const response = await fetch('https://gs-backend-r39y.onrender.com/api/research');
                 if (!response.ok) {
                     throw new Error('Failed to fetch thesis');
                 }
@@ -87,17 +85,30 @@ export default function Dashboard() {
         localStorage.setItem('selectedYear', value);
     };
 
+    const handleLetterClick = (letter, event) => {
+        if (event.detail === 1) {
+
+            setSelectedLetter(letter);
+        } else if (event.detail === 2) {
+
+            setSelectedLetter('');
+        }
+    };
+
+
     const filterBooks = () => {
         return books.filter(book => {
             const matchesSearch = book.title.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
                 book.keyword.toLowerCase().includes(debouncedSearch.toLowerCase());
             const matchesYear = selectedYear ? book.year === selectedYear : true;
-            return matchesSearch && matchesYear;
+            const matchesLetter = selectedLetter ? book.title.startsWith(selectedLetter) : true;
+            return matchesSearch && matchesYear && matchesLetter;
         });
     };
 
     const filteredBooks = filterBooks();
 
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
     return (
         <div className="dashboard">
@@ -105,35 +116,58 @@ export default function Dashboard() {
             <div className="container mt-4">
                 <div className="d-flex justify-content-between align-items-center mb-4">
                     <img src={logoLeft} alt="Logo Left" className="logo" />
-                    <h2 className="text-center">Thesis Abstract</h2>
+                    <h2 className="text-center">MC Salik-sik</h2>
                     <img src={logoRight} alt="Logo Right" className="logo" />
                 </div>
 
                 <div className="row mb-4">
                     <div className="col-md-6 col-12">
-                        <input
-                            type="text"
-                            placeholder="Search title,keywords..."
-                            value={search}
-                            onChange={handleSearchChange}
-                            className="form-control"
-                            aria-label="Search for a thesis, author, or type"
-                        />
+                        <div className="form-floating">
+                            <input
+                                type="text"
+                                id="searchInput"
+                                placeholder="Search by title or keyword"
+                                value={search}
+                                onChange={handleSearchChange}
+                                className="form-control border-dark"
+                            />
+                            <label htmlFor="searchInput">Search by title or keywords</label>
+                        </div>
                     </div>
-                    <div className="col-md-6 col-12 mt-2 mt-md-0">
-                        <select
-                            value={selectedYear}
-                            onChange={handleYearChange}
-                            className="form-control"
-                            aria-label="Filter by year"
-                        >
-                            <option value="">All Years</option>
-                            {years.map(year => (
-                                <option key={year} value={year}>{year}</option>
-                            ))}
-                        </select>
+                    <div className="col-md-6 col-12 mt-3 mt-md-0">
+                        <div className="form-floating">
+                            <select
+                                id="yearFilter"
+                                value={selectedYear}
+                                onChange={handleYearChange}
+                                className="form-select"
+                            >
+                                <option value="">All Years</option>
+                                {years.map(year => (
+                                    <option key={year} value={year}>{year}</option>
+                                ))}
+                            </select>
+                            <label htmlFor="yearFilter">Filter by year</label>
+                        </div>
                     </div>
                 </div>
+                <div className="mb-4">
+                    <div className="alphabet-filter text-center d-flex justify-content-center flex-wrap">
+                        {alphabet.map(letter => (
+                            <button
+                                key={letter}
+                                className={`btn btn-outline-dark rounded-circle mx-1 my-1 ${selectedLetter === letter ? 'btn-dark text-white' : ''
+                                    }`}
+                                style={{ width: '40px', height: '40px', fontSize: '18px' }}
+                                onClick={(e) => handleLetterClick(letter, e)}
+                            >
+                                {letter}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+
 
                 {loading ? (
                     <p className="text-center" aria-live="polite">Loading thesis...</p>
@@ -173,7 +207,6 @@ export default function Dashboard() {
                                             >
                                                 View Abstract
                                             </button>
-
                                         </div>
                                     </div>
                                 </div>
@@ -182,8 +215,6 @@ export default function Dashboard() {
                     </div>
                 )}
             </div>
-
-          
         </div>
     );
 }
