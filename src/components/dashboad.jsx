@@ -15,7 +15,7 @@ export default function Dashboard() {
     const [error, setError] = useState(null);
     const [years, setYears] = useState([]);
     const [debouncedSearch, setDebouncedSearch] = useState(search);
-    const [selectedLetter, setSelectedLetter] = useState(''); 
+    const [selectedLetter, setSelectedLetter] = useState('');
 
     const navigate = useNavigate();
 
@@ -114,14 +114,16 @@ export default function Dashboard() {
         <div className="dashboard">
             <Navbar />
             <div className="container mt-4">
-                <div className="d-flex justify-content-between align-items-center mb-4">
-                    <img src={logoLeft} alt="Logo Left" className="logo" />
-                    <h2 className="text-center">MC Salik-sik</h2>
+                {/* Logo and Title Section */}
+                <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 text-center">
+                    <img src={logoLeft} alt="Logo Left" className="logo mb-2 mb-md-0" />
+                    <h2 className="text-center mb-2 mb-md-0">MC Salik-sik</h2>
                     <img src={logoRight} alt="Logo Right" className="logo" />
                 </div>
 
+                {/* Search and Filter Section */}
                 <div className="row mb-4">
-                    <div className="col-md-6 col-12">
+                    <div className="col-12 col-md-6 mb-3 mb-md-0">
                         <div className="form-floating">
                             <input
                                 type="text"
@@ -134,7 +136,7 @@ export default function Dashboard() {
                             <label htmlFor="searchInput">Search by title or keywords</label>
                         </div>
                     </div>
-                    <div className="col-md-6 col-12 mt-3 mt-md-0">
+                    <div className="col-12 col-md-6">
                         <div className="form-floating">
                             <select
                                 id="yearFilter"
@@ -144,21 +146,28 @@ export default function Dashboard() {
                             >
                                 <option value="">All Years</option>
                                 {years.map(year => (
-                                    <option key={year} value={year}>{year}</option>
+                                    <option key={year} value={year}>
+                                        {year}
+                                    </option>
                                 ))}
                             </select>
                             <label htmlFor="yearFilter">Filter by year</label>
                         </div>
                     </div>
                 </div>
+
+                {/* Alphabet Filter */}
                 <div className="mb-4">
                     <div className="alphabet-filter text-center d-flex justify-content-center flex-wrap">
                         {alphabet.map(letter => (
                             <button
                                 key={letter}
-                                className={`btn btn-outline-dark rounded-circle mx-1 my-1 ${selectedLetter === letter ? 'btn-dark text-white' : ''
-                                    }`}
-                                style={{ width: '40px', height: '40px', fontSize: '18px' }}
+                                className={`btn btn-outline-dark rounded-circle mx-1 my-1 ${selectedLetter === letter ? 'btn-dark text-white' : ''}`}
+                                style={{
+                                    width: '36px',
+                                    height: '36px',
+                                    fontSize: '16px',
+                                }}
                                 onClick={(e) => handleLetterClick(letter, e)}
                             >
                                 {letter}
@@ -167,12 +176,15 @@ export default function Dashboard() {
                     </div>
                 </div>
 
-
-
+                {/* Accordion or Results */}
                 {loading ? (
-                    <p className="text-center" aria-live="polite">Loading thesis...</p>
+                    <p className="text-center" aria-live="polite">
+                        Loading thesis...
+                    </p>
                 ) : error ? (
-                    <p className="text-center text-danger" aria-live="polite">{error}</p>
+                    <p className="text-center text-danger" aria-live="polite">
+                        {error}
+                    </p>
                 ) : (
                     <div className="accordion" id="thesisAccordion">
                         {filteredBooks.length === 0 ? (
@@ -199,8 +211,12 @@ export default function Dashboard() {
                                         data-bs-parent="#thesisAccordion"
                                     >
                                         <div className="accordion-body">
-                                            <p><strong>Year:</strong> {book.year}</p>
-                                            <p><strong>Keywords:</strong> {book.keyword}</p>
+                                            <p>
+                                                <strong>Year:</strong> {book.year}
+                                            </p>
+                                            <p>
+                                                <strong>Keywords:</strong> {book.keyword}
+                                            </p>
                                             <button
                                                 className="btn btn-primary"
                                                 onClick={() => handleClick(book.abstract_url)}
@@ -216,5 +232,6 @@ export default function Dashboard() {
                 )}
             </div>
         </div>
+
     );
 }
