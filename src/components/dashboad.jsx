@@ -114,7 +114,7 @@ export default function Dashboard() {
                 {/* Logo and Title Section */}
                 <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 text-center">
                     <img src={logoLeft} alt="Logo Left" className="logo mb-2 mb-md-0" />
-                    <h2 className="text-center mb-2 mb-md-0">MC Salik-sik</h2>
+                    <h2 className="text-center mb-2 mb-md-0">MC salik-sik</h2>
                     <img src={logoRight} alt="Logo Right" className="logo" />
                 </div>
 
