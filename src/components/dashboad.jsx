@@ -85,13 +85,10 @@ export default function Dashboard() {
         localStorage.setItem('selectedYear', value);
     };
 
-    const handleLetterClick = (letter, event) => {
-        if (event.detail === 1) {
-            setSelectedLetter(letter);
-        } else if (event.detail === 2) {
-            setSelectedLetter('');
-        }
+    const handleLetterClick = (letter) => {
+        setSelectedLetter((prevLetter) => (prevLetter === letter ? '' : letter));
     };
+    
 
     const filterBooks = () => {
         return books.filter(book => {
