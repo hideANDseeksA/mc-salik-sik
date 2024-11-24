@@ -87,14 +87,11 @@ export default function Dashboard() {
 
     const handleLetterClick = (letter, event) => {
         if (event.detail === 1) {
-
             setSelectedLetter(letter);
         } else if (event.detail === 2) {
-
             setSelectedLetter('');
         }
     };
-
 
     const filterBooks = () => {
         return books.filter(book => {
@@ -232,6 +229,5 @@ export default function Dashboard() {
                 )}
             </div>
         </div>
-
     );
-}
+} 
