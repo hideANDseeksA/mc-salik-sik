@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google'; // Import GoogleOAuthProvider
 import Login from './components/Login';
+import Footer from './components/Footer';
 import MainDashboard from './components/dashboad'; // Ensure the dashboard path is correct
 import ViewPDF from './components/ViewPDF'; // Import the ViewPDF component
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -20,6 +21,7 @@ function App() {
           <Route path="/view-pdf" element={<ViewPDF />} /> {/* Route for viewing PDFs */}
         </Routes>
       </Router>
+  <Footer />
     </GoogleOAuthProvider>
   );
 }
