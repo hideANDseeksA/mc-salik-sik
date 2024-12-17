@@ -30,7 +30,6 @@ const styles = {
     color: "#ecf0f1",
     textAlign: "center",
     padding: "10px 0",
-    position: "absolute",
     bottom: 0,
     width: "100%",
     maxHeight: "10%",
